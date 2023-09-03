@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../pages/HomeView.vue";
-// import AboutView from "../pages/AboutView.vue";
 
 Vue.use(VueRouter);
 
@@ -13,13 +12,14 @@ let routes = [
   }
 ];
 
-if(false) {
+/* IFTRUE_isOutApp */
   routes.push(  {
     path: "/about",
     name: "about",
     component: () => import(/* webpackChunkName: 'about' */ '../pages/AboutView.vue'),
   })
-}
+/* IFTRUE_isOutApp */
+
 
 const router = new VueRouter({
   routes,

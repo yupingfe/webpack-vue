@@ -4,28 +4,34 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
 const isProduction = process.env.NODE_ENV == 'production';
 
 // 请只在生产环境下使用 CSS 提取，这将便于你在开发环境下进行热重载。
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
 
+// 配置按需编译
+const conditionalCompiler = {
+    loader: 'js-conditional-compile-loader',
+    options: {
+        isOutApp: true
+    }
+}
+
 
 const config = {
     entry: './src/index.js',
     output: {
         filename: '[name].[contenthash:8].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '../dist'),
     },
     devServer: {
         open: true,
         host: 'localhost',
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src/index.html'),
+            template: path.resolve(__dirname, '../src/index.html'),
         }),
         new VueLoaderPlugin()
 
@@ -40,7 +46,7 @@ const config = {
             },
             {
                 test: /\.(js|jsx)$/i,
-                loader: 'babel-loader',
+                use: ['babel-loader', conditionalCompiler],
             },
             {
                 test: /\.css$/i,
