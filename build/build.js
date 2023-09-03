@@ -7,6 +7,7 @@ const chalk = require('chalk') // 为终端打印不同的颜色文字的插件
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.config')()
 
+// 控制台转圈圈
 const spinner = ora('building for ' + process.env.NODE_ENV + '...')
 spinner.start()
 
@@ -16,8 +17,7 @@ rimraf(webpackConfig.output.path).then(
 ).catch(err => {throw err})
 
 
-function doWepack() {
-    webpack(webpackConfig, (err, stats) => {
+function doWepack() {    webpack(webpackConfig, (err, stats) => {
         spinner.stop()
         if(err) {throw err}
         process.stdout.write(stats.toString({

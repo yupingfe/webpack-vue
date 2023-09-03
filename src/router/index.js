@@ -12,13 +12,13 @@ let routes = [
   }
 ];
 
-/* IFTRUE_isOutApp */
-  routes.push(  {
+if(false) {
+  routes.push({
     path: "/about",
     name: "about",
     component: () => import(/* webpackChunkName: 'about' */ '../pages/AboutView.vue'),
   })
-/* IFTRUE_isOutApp */
+}
 
 
 const router = new VueRouter({
